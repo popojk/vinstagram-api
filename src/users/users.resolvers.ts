@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/GqlAuth.guard';
-import { CurrentUser } from 'src/decorators/currentUserDecorator';
+import { GqlCurrentUser } from 'src/decorators/currentUserDecorator';
 import { User } from 'src/schemas/user.schema';
 import { FollowInput } from './input/follow.input';
 import { RequestUser } from './interface/user.interface';
@@ -15,14 +15,14 @@ export class UserResolver {
   @Query(() => User)
   async user(
     @Args('id', { type: () => ID }) id: string, 
-    @CurrentUser() user: User): Promise<User> {
+    @GqlCurrentUser() user: User): Promise<User> {
     return this.userService.findUser(id);
   }
 
   @Mutation(() => User)
   async follow(
     @Args('input') input: FollowInput,
-    @CurrentUser() user: RequestUser
+    @GqlCurrentUser() user: RequestUser
   ): Promise<User> {
     return this.userService.addFollowing(user.id, input.followId);
   }
@@ -30,7 +30,7 @@ export class UserResolver {
   @Mutation(() => User)
   async unFollow(
     @Args('input') input: FollowInput,
-    @CurrentUser() user: RequestUser
+    @GqlCurrentUser() user: RequestUser
   ): Promise<User> {
     return this.userService.deleteFollowing(user.id, input.followId);
   }

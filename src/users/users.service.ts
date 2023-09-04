@@ -31,6 +31,11 @@ export class UsersService {
     }
   }
 
+  async findUserByUsername(username: string): Promise<User> {
+    const user = await this.userModel.findOne({ username });
+    return user;
+  }
+
   async findUser(id: string): Promise<User> {
     const user = await this.userModel.findById({ _id: id })
     .populate({ path: 'follower', model: 'User' })

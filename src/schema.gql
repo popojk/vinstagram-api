@@ -15,6 +15,11 @@ type Query {
   user(id: ID!): User!
 }
 
+type Reply {
+  author: User!
+  text: String!
+}
+
 type User {
   _id: ID!
   avatar: String!

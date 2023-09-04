@@ -9,6 +9,7 @@ export type UserDocument = HydratedDocument<User>;
 export class User {
 
   @Field(() => ID)
+  @Prop()
   _id: mongoose.Types.ObjectId;
   
   @Field()
