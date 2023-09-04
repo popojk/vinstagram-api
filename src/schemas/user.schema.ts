@@ -9,7 +9,7 @@ export type UserDocument = HydratedDocument<User>;
 export class User {
 
   @Field(() => ID)
-  @Prop()
+  //@Prop()
   _id: mongoose.Types.ObjectId;
   
   @Field()
@@ -35,7 +35,6 @@ export class User {
   @Field(type => [User])
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: User.name }] })
   follower: User[];
-
 
 }
 

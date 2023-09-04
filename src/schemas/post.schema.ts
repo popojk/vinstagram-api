@@ -1,15 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { User } from './user.schema';
 import { Reply } from './reply.schema';
 
-export type UserDocument = HydratedDocument<Post>;
+export type PostDocument = HydratedDocument<Post>;
 
 @ObjectType()
 @Schema()
 export class Post {
 
+  @Field(() => ID)
   _id: mongoose.Types.ObjectId;
 
   @Field(type => User)
@@ -23,9 +24,9 @@ export class Post {
   @Field()
   @Prop()
   image: string;
-  
+
   @Field(type => [User])
-  @Prop()
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: User.name }] })
   likers: User[]
 
   @Field(type => [Reply])

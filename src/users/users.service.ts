@@ -5,11 +5,15 @@ import { User, UserSchema } from '../schemas/user.schema';
 import { CreateUserInput } from './dto/create-user.dto';
 import { imgurFileHandler } from 'src/helpers/file-helpers';
 import { CurrentUser } from 'src/decorators/currentUserDecorator';
+import { PostsService } from 'src/posts/posts.service';
+import { Post } from 'src/schemas/post.schema';
 const bcrypt = require('bcrypt');
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {};
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>
+    ) {};
 
   async createUser(createUserInput: CreateUserInput, file: any): Promise<User> {
     const avatar = await imgurFileHandler(file);
@@ -29,6 +33,11 @@ export class UsersService {
       });
       return createdUser.save();
     }
+  }
+
+  async findUserById(userId: string): Promise<User> {
+    const user = await this.userModel.findById(userId);
+    return user;
   }
 
   async findUserByUsername(username: string): Promise<User> {
@@ -73,5 +82,8 @@ export class UsersService {
 
     return followingUser;
   }
+
+  
+  
 
 }

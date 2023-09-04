@@ -3,7 +3,7 @@ import mongoose, { HydratedDocument } from 'mongoose';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { User } from './user.schema';
 
-export type UserDocument = HydratedDocument<Reply>;
+export type ReplyDocument = HydratedDocument<Reply>;
 
 @ObjectType()
 @Schema()
@@ -19,7 +19,6 @@ export class Reply {
   @Prop()
   text: string;
 
-
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const ReplySchema = SchemaFactory.createForClass(Reply);
