@@ -1,0 +1,26 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input FollowInput {
+  followId: String!
+}
+
+type Mutation {
+  follow(input: FollowInput!): User!
+  unFollow(input: FollowInput!): User!
+}
+
+type Query {
+  user(id: ID!): User!
+}
+
+type User {
+  _id: ID!
+  avatar: String!
+  follower: [User!]!
+  following: [User!]!
+  name: String!
+  password: String!
+  username: String!
+}

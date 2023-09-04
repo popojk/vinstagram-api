@@ -1,8 +1,14 @@
-export class CreateUserDto {
-  
-  readonly name: string;
+import { IsNotEmpty } from 'class-validator';
 
-  readonly account: string;
+export class CreateUserInput {
 
-  readonly password: string;
+  @IsNotEmpty()
+  name: string;
+
+  @IsNotEmpty()
+  username: string;
+
+  @IsNotEmpty()
+  password: string;
+
 }

@@ -1,23 +1,17 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { Body, Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { CreateUserInput } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { Response } from 'express';
 import { User } from 'src/schemas/user.schema';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users')
 export class UsersController {
 
   constructor(private usersService: UsersService) {};
 
-  @Get()
-  async getAllUsers(@Res() res: Response) {
-    const users = await this.usersService.findAllUsers();
-    console.log(users);
-    res.send(users);
-  }
-
   @Get(':id')
-  async getUser(
+  async getAccount(
     @Param('id') id: string,
     @Res() res: Response){
       const user = await this.usersService.findUser(id);
@@ -25,10 +19,13 @@ export class UsersController {
   }
   
   @Post()
+  @UseInterceptors(FileInterceptor('file', { dest: './upload' }))
   async createUser(
-    @Body() createUserDto: CreateUserDto,
+    @Body() createUserInput: CreateUserInput,
+    @UploadedFile() file: Express.Multer.File,
     @Res() res: Response) {
-    const createdUser = await this.usersService.createUser(createUserDto)
+    const createdUser = await this.usersService.createUser(createUserInput, file)
     res.send(createdUser);
   }
+
 }
