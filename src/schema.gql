@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateReplyInput {
+  postId: String!
+  text: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -15,11 +20,18 @@ input LikePostInput {
   postId: String!
 }
 
+input LikeReplyInput {
+  replyId: String!
+}
+
 type Mutation {
+  createReply(input: CreateReplyInput!): Reply!
   follow(input: FollowInput!): User!
   likePost(input: LikePostInput!): Post!
+  likeReply(input: LikeReplyInput!): Reply!
   unFollow(input: FollowInput!): User!
   unlikePost(input: LikePostInput!): Post!
+  unlikeReply(input: LikeReplyInput!): Reply!
 }
 
 type Post {
@@ -33,11 +45,14 @@ type Post {
 }
 
 type Query {
+  findPost(post_id: ID!): Post!
+  findPosts: [Post!]!
   user(id: ID!): User!
 }
 
 type Reply {
   author: User!
+  likers: [User!]!
   text: String!
 }
 

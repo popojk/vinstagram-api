@@ -7,6 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
+import { RepliesModule } from './replies/replies.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { AuthModule } from './auth/auth.module';
     PostsModule,
     ConfigModule.forRoot(),
     MongooseModule.forRoot('mongodb://root:password@localhost:27016/vinstagram?authSource=admin'),
-    AuthModule
+    AuthModule,
+    RepliesModule
   ],
   //controllers: [AppController, UsersController, PostsController],
   //providers: [AppService, UsersService],
