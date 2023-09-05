@@ -23,6 +23,10 @@ export class Reply {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: User.name }] })
   likers: User[]
 
+  @Field()
+  @Prop()
+  isLiked?: boolean;
+
 }
 
 export const ReplySchema = SchemaFactory.createForClass(Reply);

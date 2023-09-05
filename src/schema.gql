@@ -53,6 +53,7 @@ type Query {
 
 type Reply {
   author: User!
+  isLiked: Boolean!
   likers: [User!]!
   text: String!
 }

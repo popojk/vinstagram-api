@@ -28,12 +28,19 @@ export class PostsService {
           "text": 1,
           "image":1,
           "likers": 1,
-          "replies":1,
+          "replies": {
+            "_id":1,
+            "author": 1,
+            "text": 1,
+            "likers": 1,
+            "isLiked": { "$in": [new mongoose.Types.ObjectId(currentUser.id), "$replies.likers"] }
+          },
           "createdAt":1,
           "isLiked": { "$in": [new mongoose.Types.ObjectId(currentUser.id), "$likers"] }
         }
       }
     ]);
+    console.log(posts)
     return posts;
   }
 
@@ -49,7 +56,13 @@ export class PostsService {
           "text": 1,
           "image": 1,
           "likers": 1,
-          "replies": 1,
+          "replies": {
+            "_id": 1,
+            "author": 1,
+            "text": 1,
+            "likers": 1,
+            "isLiked": { "$in": [new mongoose.Types.ObjectId(currentUser.id), "$replies.likers"] }
+          },
           "createdAt": 1,
           "isLiked": { "$in": [new mongoose.Types.ObjectId(currentUser.id), "$likers"] }
         }
