@@ -16,13 +16,16 @@ export class PostResolver {
   constructor(private readonly postsService: PostsService) { };
 
   @Query(() => [Post])
-  async findPosts(): Promise<Post[]> {
-    return this.postsService.findPosts();
+  async findPosts(@GqlCurrentUser() user: RequestUser): Promise<Post[]> {
+    return this.postsService.findPosts(user);
   }
 
-  @Query(() => Post)
-  async findPost(@Args('post_id', { type: () => ID }) postId: string): Promise<Post> {
-    return this.postsService.findPostById(postId);
+  @Query(() => [Post])
+  async findPost(
+    @Args('post_id', { type: () => ID }) postId: string,
+    @GqlCurrentUser() user: RequestUser
+    ) {
+    return this.postsService.findPostById(postId, user);
   }
 
   @Mutation(() => Post)

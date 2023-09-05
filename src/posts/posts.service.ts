@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { imgurFileHandler } from 'src/helpers/file-helpers';
 import { Post } from 'src/schemas/post.schema';
 import { Reply } from 'src/schemas/reply.schema';
@@ -18,13 +18,44 @@ export class PostsService {
     private usersService: UsersService
     ) {};
 
-  async findPosts(): Promise<Post[]> {
-    const posts: Post[] = await this.postModel.find();
+  async findPosts(currentUser: RequestUser): Promise<Post[]> {
+    // const posts: Post[] = await this.postModel.find();
+    const posts: Post[] = await this.postModel.aggregate([
+      {
+        "$project": {
+          "_id":1,
+          "author":1,
+          "text": 1,
+          "image":1,
+          "likers": 1,
+          "replies":1,
+          "createdAt":1,
+          "isLiked": { "$in": [new mongoose.Types.ObjectId(currentUser.id), "$likers"] }
+        }
+      }
+    ]);
     return posts;
   }
 
-  async findPostById (postId: string) {
-    const post = await this.postModel.findById(postId);
+  async findPostById(postId: string, currentUser: RequestUser) {
+    // const post = await this.postModel.findById(postId);
+    const post = await this.postModel.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(postId) } },
+      { $limit: 1 },
+      {
+        "$project": {
+          "_id": 1,
+          "author": 1,
+          "text": 1,
+          "image": 1,
+          "likers": 1,
+          "replies": 1,
+          "createdAt": 1,
+          "isLiked": { "$in": [new mongoose.Types.ObjectId(currentUser.id), "$likers"] }
+        }
+      }
+    ]);
+    console.log(post)
     return post;
   }
 

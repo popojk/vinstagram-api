@@ -37,6 +37,9 @@ export class Post {
   @Prop()
   createdAt: Date;
 
+  @Field()
+  @Prop()
+  isLiked?: boolean;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

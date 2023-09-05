@@ -39,13 +39,14 @@ type Post {
   author: User!
   createdAt: DateTime!
   image: String!
+  isLiked: Boolean!
   likers: [User!]!
   replies: [Reply!]!
   text: String!
 }
 
 type Query {
-  findPost(post_id: ID!): Post!
+  findPost(post_id: ID!): [Post!]!
   findPosts: [Post!]!
   user(id: ID!): User!
 }
