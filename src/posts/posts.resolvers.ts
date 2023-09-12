@@ -2,6 +2,7 @@ import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver, Query, ID } from "@nestjs/graphql";
 import { GqlAuthGuard } from "src/auth/GqlAuth.guard";
 import { GqlCurrentUser } from "src/decorators/currentUserDecorator";
+import { LikeReplyInput } from "src/replies/input/likeReply.input";
 import { Post } from "src/schemas/post.schema";
 import { Reply } from "src/schemas/reply.schema";
 import { RequestUser } from "src/users/interface/user.interface";
@@ -51,5 +52,22 @@ export class PostResolver {
   ): Promise<Reply> {
     return this.postsService.createReply(user.id, input.postId, input);
   }
+
+  @Mutation(() => Post)
+  async likeReply(
+    @Args('input') input: LikeReplyInput,
+    @GqlCurrentUser() user: RequestUser
+  ): Promise<Reply> {
+    return this.postsService.likeReply(user.id, input.postId ,input.replyId);
+  }
+
+  @Mutation(() => Post)
+  async unlikeReply(
+    @Args('input') input: LikeReplyInput,
+    @GqlCurrentUser() user: RequestUser
+  ): Promise<Reply> {
+    return this.postsService.unlikeReply(user.id, input.postId, input.replyId);
+  }
+
 
 }

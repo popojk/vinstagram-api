@@ -26,7 +26,8 @@ export class Post {
   image: string;
 
   @Field(type => [User])
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: User.name }] })
+  //@Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: User.name }] })
+  @Prop()
   likers: User[]
 
   @Field(type => [Reply])

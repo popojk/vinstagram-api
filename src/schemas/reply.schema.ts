@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { User } from './user.schema';
 
 export type ReplyDocument = HydratedDocument<Reply>;
@@ -9,6 +9,7 @@ export type ReplyDocument = HydratedDocument<Reply>;
 @Schema()
 export class Reply {
 
+  @Field(() => ID)
   _id: mongoose.Types.ObjectId;
 
   @Field()
@@ -20,8 +21,9 @@ export class Reply {
   text: string;
 
   @Field(type => [User])
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: User.name }] })
-  likers: User[]
+  //@Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: User.name }] })
+  @Prop()
+  likers: User[];
 
   @Field()
   @Prop()

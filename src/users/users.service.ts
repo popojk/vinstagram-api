@@ -59,8 +59,8 @@ export class UsersService {
     let currentUser = await this.userModel.findById(currentUserId);
     let followingUser = await this.userModel.findById(followingId);
 
-    currentUser.following.push(followingUser.id);
-    followingUser.follower.push(currentUser.id);
+    currentUser.following.push(followingUser);
+    followingUser.follower.push(currentUser);
 
     currentUser.save();
     followingUser.save();
@@ -78,7 +78,7 @@ export class UsersService {
     let followingUser = await this.userModel.findByIdAndUpdate(followingId,
       { $pull: { follower: currentUserId } },
       { new: true }
-      );
+    );
 
     return followingUser;
   }

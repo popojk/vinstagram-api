@@ -1,4 +1,4 @@
-import { UseGuards } from "@nestjs/common";
+/* import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver, Query, ID } from "@nestjs/graphql";
 import { GqlAuthGuard } from "src/auth/GqlAuth.guard";
 import { GqlCurrentUser } from "src/decorators/currentUserDecorator";
@@ -29,4 +29,4 @@ export class RepliesResolver {
     return this.repliesService.unlikeReply(user.id, input.replyId);
   }
 
-}
+} */

@@ -8,4 +8,8 @@ export class LikeReplyInput {
   @Field()
   replyId: string
 
+  @IsNotEmpty()
+  @Field()
+  postId: string
+
 }

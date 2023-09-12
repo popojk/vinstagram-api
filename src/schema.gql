@@ -21,6 +21,7 @@ input LikePostInput {
 }
 
 input LikeReplyInput {
+  postId: String!
   replyId: String!
 }
 
@@ -28,10 +29,10 @@ type Mutation {
   createReply(input: CreateReplyInput!): Reply!
   follow(input: FollowInput!): User!
   likePost(input: LikePostInput!): Post!
-  likeReply(input: LikeReplyInput!): Reply!
+  likeReply(input: LikeReplyInput!): Post!
   unFollow(input: FollowInput!): User!
   unlikePost(input: LikePostInput!): Post!
-  unlikeReply(input: LikeReplyInput!): Reply!
+  unlikeReply(input: LikeReplyInput!): Post!
 }
 
 type Post {
@@ -52,6 +53,7 @@ type Query {
 }
 
 type Reply {
+  _id: ID!
   author: User!
   isLiked: Boolean!
   likers: [User!]!
