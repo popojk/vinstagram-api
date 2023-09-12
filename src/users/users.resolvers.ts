@@ -19,6 +19,12 @@ export class UserResolver {
     return this.userService.findUser(id);
   }
 
+  @Query(() => [User])
+  async recommendUsers(
+    @GqlCurrentUser() user: RequestUser): Promise<User[]> {
+    return this.userService.findRecommendUsers(user.id);
+  }
+
   @Mutation(() => User)
   async follow(
     @Args('input') input: FollowInput,

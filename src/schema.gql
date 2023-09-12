@@ -49,6 +49,7 @@ type Post {
 type Query {
   findPost(post_id: ID!): [Post!]!
   findPosts: [Post!]!
+  recommendUsers: [User!]!
   user(id: ID!): User!
 }
 

@@ -1,6 +1,6 @@
 import { Body, Injectable, UploadedFile } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { User, UserSchema } from '../schemas/user.schema';
 import { CreateUserInput } from './dto/create-user.dto';
 import { imgurFileHandler } from 'src/helpers/file-helpers';
@@ -43,6 +43,17 @@ export class UsersService {
   async findUserByUsername(username: string): Promise<User> {
     const user = await this.userModel.findOne({ username });
     return user;
+  }
+
+  async findRecommendUsers(currentUserId: string): Promise<User[]> {
+    let currentUser = await this.userModel.findById(currentUserId);
+    const users = await this.userModel.find({
+      _id: {
+        $ne: new mongoose.Types.ObjectId(currentUserId),
+        $nin: currentUser.following
+      },
+    });
+    return users;
   }
 
   async findUser(id: string): Promise<User> {
