@@ -83,7 +83,12 @@ export class PostsService {
               "likers": 1,
               "isLiked": 1
             },
-            "createdAt": 1,
+            "createdAt": {
+              $dateToString: {
+                format: "%Y-%m-%d %H:%M", // 指定日期格式
+                date: "$createdAt" // 源日期字段
+              }
+            },
             "isLiked": 1
           }
         },
@@ -124,7 +129,12 @@ export class PostsService {
             "likers": 1,
             "isLiked": { "$in": [new mongoose.Types.ObjectId(currentUser.id), "$replies.likers._id"] }
           },
-          "createdAt": 1,
+          "createdAt": {
+            $dateToString: {
+              format: "%Y-%m-%d", // 指定日期格式
+              date: "$createdAt" // 源日期字段
+            }
+          },
           "isLiked": { "$in": [currentUser.id, "$likers._id"] }
         }
       }

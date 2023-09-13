@@ -34,7 +34,7 @@ export class Post {
   @Prop()
   replies: Reply[]
 
-  @Field()
+  @Field(() => String)
   @Prop()
   createdAt: Date;
 
