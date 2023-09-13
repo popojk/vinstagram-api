@@ -1,4 +1,4 @@
-import { Body, Injectable, UploadedFile } from '@nestjs/common';
+import { Body, HttpException, HttpStatus, Injectable, UploadedFile } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { User, UserSchema } from '../schemas/user.schema';
@@ -16,8 +16,13 @@ export class UsersService {
     ) {};
 
   async createUser(createUserInput: CreateUserInput, file: any): Promise<User> {
+    const checkUser = await this.userModel.find({ username: createUserInput.username })
+    if (checkUser) {
+      throw new HttpException('帳號已存在', HttpStatus.BAD_REQUEST)
+    }
     const avatar = await imgurFileHandler(file);
     const hash = await bcrypt.hash(createUserInput.password, 10);
+    
     if(file !== undefined) {
       const createdUser = await new this.userModel({
         name: createUserInput.name,
