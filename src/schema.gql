@@ -1,0 +1,67 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateReplyInput {
+  postId: String!
+  text: String!
+}
+
+input FollowInput {
+  followId: String!
+}
+
+input LikePostInput {
+  postId: String!
+}
+
+input LikeReplyInput {
+  postId: String!
+  replyId: String!
+}
+
+type Mutation {
+  createReply(input: CreateReplyInput!): Reply!
+  follow(input: FollowInput!): User!
+  likePost(input: LikePostInput!): Post!
+  likeReply(input: LikeReplyInput!): Post!
+  unFollow(input: FollowInput!): User!
+  unlikePost(input: LikePostInput!): Post!
+  unlikeReply(input: LikeReplyInput!): Post!
+}
+
+type Post {
+  _id: ID!
+  author: User!
+  createdAt: String!
+  image: String!
+  isLiked: Boolean!
+  likers: [User!]!
+  replies: [Reply!]!
+  text: String!
+}
+
+type Query {
+  findPost(post_id: ID!): [Post!]!
+  findPosts: [Post!]!
+  recommendUsers: [User!]!
+  user(id: ID!): User!
+}
+
+type Reply {
+  _id: ID!
+  author: User!
+  isLiked: Boolean!
+  likers: [User!]!
+  text: String!
+}
+
+type User {
+  _id: ID!
+  avatar: String!
+  follower: [User!]!
+  following: [User!]!
+  name: String!
+  password: String!
+  username: String!
+}

@@ -1,18 +1,28 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UsersController } from './users/users.controller';
-import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
-import { PostsController } from './posts/posts.controller';
 import { PostsModule } from './posts/posts.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
+import { RepliesModule } from './replies/replies.module';
 
 @Module({
   imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
+      playground: true
+    }),
     UsersModule, 
     PostsModule,
-    MongooseModule.forRoot('mongodb://root:password@localhost:27016/vinstagram?authSource=admin')
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot('mongodb://root:password@localhost:27016/vinstagram?authSource=admin'),
+    AuthModule,
+    RepliesModule
   ],
   //controllers: [AppController, UsersController, PostsController],
   //providers: [AppService, UsersService],
