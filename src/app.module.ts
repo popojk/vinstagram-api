@@ -13,6 +13,7 @@ import { RepliesModule } from './replies/replies.module';
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      path: '/api/graphql',
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
       playground: true
@@ -20,7 +21,7 @@ import { RepliesModule } from './replies/replies.module';
     UsersModule, 
     PostsModule,
     ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb://root:password@localhost:27016/vinstagram?authSource=admin'),
+    MongooseModule.forRoot(process.env.MONGODB_URL as string),
     AuthModule,
     RepliesModule
   ],
