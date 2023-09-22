@@ -1,0 +1,22 @@
+services:
+  vinstagram-api:
+    image: popojk/vinstagram-api:latest
+    ports:
+      - 8080:8080
+    networks:
+      - vinstagram-network
+
+  vinstagram-frontend:
+    image: popojk/vinstagram-frontend:latest
+    ports:
+      - 80:80
+    networks:
+      - vinstagram-network
+    external_links:
+      - vinstagram-api:vinstagram-api
+    depends_on:
+      - vinstagram-api
+
+networks:
+  vinstagram-network:
+    driver: bridge

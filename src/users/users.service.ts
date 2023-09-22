@@ -16,7 +16,7 @@ export class UsersService {
     ) {};
 
   async createUser(createUserInput: CreateUserInput, file: any): Promise<User> {
-    const checkUser = await this.userModel.find({ username: createUserInput.username })
+    const checkUser = await this.userModel.findOne({ username: createUserInput.username })
     if (checkUser) {
       throw new HttpException('帳號已存在', HttpStatus.BAD_REQUEST)
     }
