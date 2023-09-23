@@ -2,6 +2,10 @@
 
 Vinstagram是一個由Instagram發想的社群平台，提供用戶註冊登入後瀏覽、發佈貼文，也可以對貼文按讚、留言，也可以追蹤其他使用者，而本Repo是後端API，使用Node.js搭配NestJS打造，並且使用GraphQL風格撰寫API
 
+## 網站連結
+[網站連結] (http://vinstagram.ap-northeast-2.elasticbeanstalk.com/home/main)
+[前端Repo] (https://github.com/popojk/vinstagram-frontend)
+
 ## 使用技術
 | 技術                | 用途                |
 | ------------------ | ------------------- |
